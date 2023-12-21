@@ -226,7 +226,10 @@ public class SwiftCustomAuthPlugin: NSObject, FlutterPlugin {
                 )
                 do {
                     let data = try await customAuthSdk.getTorusKey(verifier: verifier, verifierId: verifierId, idToken: idToken, userData: verifierParams)
-                    result(data)
+                    result( [
+                        "publicAddress": data["publicAddress"],
+                        "privateKey": data["privateKey"],
+                    ])
                 } catch {
                     result(FlutterError(
                         code: "IosSdkError", message: "Error from iOS SDK: \(error.localizedDescription)", details: error.localizedDescription
